@@ -1,0 +1,65 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "",
+    "Metadata": {
+
+    },
+    "Parameters": {
+      "wnvpccidr": {
+          "Description": "provide vpc cidr",
+          "Type": "String"
+
+      },
+      "wnsncidr": {
+          "Description": "provide subnet cidr",
+          "Type": "String"
+      },
+    "Azsnid": {
+        "Description": "choose an az for your subnet1",
+        "Type": "AWS::EC2::AvailabilityZone::Name"
+
+    }
+
+    },
+    "Mappings": {
+
+    },
+    "Conditions": {
+
+    },
+    "Resources": {
+      "wnvpc1": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": { "Ref": "wnvpccidr" },
+        "Tags": [{ "Key": "name", "Value":  "wnvpc1" }]
+      }
+    },
+    "wnvpcigw": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [{ "Key": "name", "Value":  "wnvpcigw" }]
+      }
+    },
+    "AttachGateway": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": { "Ref": "wnvpc1" },
+        "InternetGatewayId": { "Ref": "wnvpcigw" }
+      }
+    },
+    "wnsn1": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "AvailabilityZone": { "Ref": "Azsnid" },
+        "VpcId": { "Ref": "wnvpc1" },
+        "CidrBlock": { "Ref": "wnsncidr" },
+        "Tags": [{ "Key": "name", "Value":  "wnsn1" }]
+      }
+    }
+
+    },
+    "Outputs": {
+
+    }
+}
