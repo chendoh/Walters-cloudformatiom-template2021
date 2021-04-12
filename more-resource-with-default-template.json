@@ -8,30 +8,30 @@
       "wnvpccidr": {
           "Description": "provide vpc cidr",
           "Type": "String",
-          "Default": "10.0.0.0/16"
+          "Default": ""
 
       },
       "wnsnprivatecidr": {
           "Description": "provide subnet cidr",
           "Type": "String",
-          "Default": "10.0.1.0/24"
+          "Default": ""
       },
     "Azsnidprivate": {
         "Description": "choose an az for your private subnet",
         "Type": "String",
-        "Default": "us-east-1a"
+        "Default": ""
 
     },
     "Azsnidpublic": {
         "Description": "choose an az for your public subnet",
         "Type": "String",
-        "Default": "us-east-1b"
+        "Default": ""
 
     },
     "wnsnpubliccidr": {
         "Description": "provide subnet cidr",
         "Type": "String",
-        "Default": "10.0.2.0/24"
+        "Default": ""
       }
 
 
