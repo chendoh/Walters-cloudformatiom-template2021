@@ -1,0 +1,126 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "",
+    "Metadata": {
+
+    },
+    "Parameters": {
+      "wnvpccidr": {
+          "Description": "provide vpc cidr",
+          "Type": "String"
+          
+
+      },
+      "wnsnprivatecidr": {
+          "Description": "provide subnet cidr",
+          "Type": "String"
+          
+      },
+    "Azsnidprivate": {
+        "Description": "choose an az for your private subnet",
+        "Type": "String"
+        
+
+    },
+    "Azsnidpublic": {
+        "Description": "choose an az for your public subnet",
+        "Type": "String"
+        
+
+    },
+    "wnsnpubliccidr": {
+        "Description": "provide subnet cidr",
+        "Type": "String"
+        
+      }
+
+
+    },
+    "Mappings": {
+
+    },
+    "Conditions": {
+
+    },
+    "Resources": {
+      "wnvpcOK": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": { "Ref": "wnvpccidr" },
+        "Tags": [{ "Key": "Name", "Value":  "wnvpcOK" }]
+      }
+    },
+    "wnvpcOKigw": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [{ "Key": "Name", "Value":  "wnvpcOKigw" }]
+      }
+    },
+    "AttachGateway": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": { "Ref": "wnvpcOK" },
+        "InternetGatewayId": { "Ref": "wnvpcOKigw" }
+      }
+    },
+    "wnsnprivate": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "AvailabilityZone": { "Ref": "Azsnidprivate" },
+        "VpcId": { "Ref": "wnvpcOK" },
+        "CidrBlock": { "Ref": "wnsnprivatecidr" },
+        "Tags": [{ "Key": "name", "Value":  "wnsnprivate" }]
+      }
+    },
+    "wnsnpublic": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "AvailabilityZone": { "Ref": "Azsnidpublic" },
+        "VpcId": { "Ref": "wnvpcOK" },
+        "CidrBlock": { "Ref": "wnsnpubliccidr" },
+        "Tags": [{ "Key": "name", "Value":  "wnsnpublic" }]
+      }
+    },
+    "wnprivateRT": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": { "Ref": "wnvpcOK" },
+        "Tags": [{ "Key": "name", "Value":  "wnprivateRT" }]
+      }
+    },
+    "wnpublicRT": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": { "Ref": "wnvpcOK" },
+        "Tags": [{ "Key": "name", "Value":  "wnpublicRT" }]
+      }
+    },
+    "privateAssociation": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": { "Ref": "wnsnprivate" },
+        "RouteTableId": { "Ref": "wnprivateRT" }
+      }
+    },
+    "pubblicAssociation": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": { "Ref": "wnsnpublic" },
+        "RouteTableId": { "Ref": "wnpublicRT" }
+      }
+    },
+    "routespublicsubnet": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": { "Ref": "wnpublicRT" },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": { "Ref": "wnvpcOKigw" }
+      }
+    }
+
+
+    },
+    "Outputs": {
+
+    }
+}
