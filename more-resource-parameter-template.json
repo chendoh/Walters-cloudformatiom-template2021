@@ -1,0 +1,21 @@
+[
+   {
+     "ParameterKey": "wnvpccidr",
+     "ParameterValue": "10.0.0.0/16"
+   },
+   {
+     "ParameterKey": "wnsnprivatecidr",
+     "ParameterValue": "10.0.1.0/24"
+   },
+   {
+     "ParameterKey": "wnsnpubliccidr",
+     "ParameterValue": "10.0.2.0/24"
+   },
+   {
+     "ParameterKey": "Azsnidprivate",
+     "ParameterValue": "us-east-1a"
+   },
+   {
+     "ParameterKey": "Azsnidpublic",
+     "ParameterValue": "us-east-1b"
+   }
